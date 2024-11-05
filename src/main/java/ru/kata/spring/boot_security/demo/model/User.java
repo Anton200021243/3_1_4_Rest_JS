@@ -1,17 +1,18 @@
 package ru.kata.spring.boot_security.demo.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "username")
     private String username;
 
     @Column(name = "password")
@@ -20,8 +21,13 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    public User() {
-    }
+    @ManyToMany()
+    @JoinTable(name = "users_roles",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Collection<Role> roles;
+
+    public User() { }
 
     public User(String username, String password, String email) {
         this.username = username;
@@ -59,6 +65,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
