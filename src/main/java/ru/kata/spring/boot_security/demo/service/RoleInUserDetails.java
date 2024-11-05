@@ -12,12 +12,10 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 @Service
 public class RoleInUserDetails implements UserDetailsService {
-    private final RoleRepository roleRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public RoleInUserDetails(RoleRepository roleRepository, UserRepository userRepository) {
-        this.roleRepository = roleRepository;
+    public RoleInUserDetails(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -25,9 +23,11 @@ public class RoleInUserDetails implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
+
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
+
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getRoles());
     }
 }
