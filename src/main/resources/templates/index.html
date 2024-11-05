@@ -12,13 +12,13 @@
 <p th:text="' EMAIL: '+ ${user.email}"></p>
 <p th:text="' PASSWORD: '+ ${user.password}"></p>
 <br/>
-<a th:href="@{/edit(id=${user.id})}">Edit User</a>
+<a th:href="@{/admin/edit(id=${user.id})}">Edit User</a>
 <hr>
 <br/>
-<a th:href="@{/}">User all</a>
+<a th:href="@{/admin/}">User all</a>
 <br/>
 <br/>
-<form method="GET" action="/delete">
+<form method="GET" action="/admin/delete">
     <input type="hidden" name="id" th:value="${user.id}">
     <input type="submit" value="Delete">
 </form>

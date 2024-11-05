@@ -90,7 +90,7 @@
 <body>
 
 <div class="container">
-    <form th:method="PATCH" th:action="@{/user/{id}(id=${user.getId()})}" th:object="${user}">
+    <form th:method="POST" th:action="@{/admin/update(id=${user.getId()})}" th:object="${user}">
         <h2>Update user</h2>
         <div class="field">
             <label for="username">Enter name:</label>

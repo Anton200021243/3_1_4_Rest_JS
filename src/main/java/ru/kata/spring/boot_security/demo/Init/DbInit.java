@@ -27,8 +27,8 @@ public class DbInit {
         roleRepository.deleteAll();
 
         // Создаем роли
-        Role roleUser = new Role(1, "ROLE_USER");
-        Role roleAdmin = new Role(2, "ROLE_ADMIN");
+        Role roleUser = new Role((long) 1, "ROLE_USER");
+        Role roleAdmin = new Role((long) 2, "ROLE_ADMIN");
 
         roleRepository.save(roleUser);
         roleRepository.save(roleAdmin);

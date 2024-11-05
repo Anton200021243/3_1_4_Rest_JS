@@ -8,11 +8,11 @@
 </head>
 <body>
 <div th:each="user: ${users}">
-    <a th:href="@{'/user?id=' + ${user.id}}"
+    <a th:href="@{'/admin/user?id=' + ${user.id}}"
        th:text="'ID: ' + ${user.id} + ' name: '
        + ${user.getUsername()}">user</a>
 </div>
 <hr/>
-<a href="new">Create new user</a>
+<a href="/admin/new">Create new user</a>
 </body>
 </html>

@@ -2,16 +2,14 @@ package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
     private final UserService userService;
     private final RoleService roleService;
@@ -21,7 +19,7 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public String showAllUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "show";
@@ -30,7 +28,7 @@ public class AdminController {
     @GetMapping("/user")
     public String showUser(@RequestParam("id") int id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
-        return "index";
+        return "index";   //admin/user?id=69
     }
 
     @GetMapping("/new")
@@ -58,12 +56,12 @@ public class AdminController {
     public String update(@ModelAttribute("user") User user,
                          @RequestParam("id") int id, @ModelAttribute("role") Role role) {
         userService.updateUser(user);
-        return "redirect:/";
+        return "redirect:";
     }
 
     @GetMapping("/delete")
     public String delete(@RequestParam("id") int id) {
         userService.deleteUser(id);
-        return "redirect:/";
+        return "redirect:";
     }
 }
