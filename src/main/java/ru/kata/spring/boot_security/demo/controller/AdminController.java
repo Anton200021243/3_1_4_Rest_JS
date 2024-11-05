@@ -22,19 +22,19 @@ public class AdminController {
     }
 
     @GetMapping("/")
-    public String showUser(Model model) {
+    public String showAllUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "show";
     }
 
     @GetMapping("/user")
-    public String index(@RequestParam("id") int id, Model model) {
+    public String showUser(@RequestParam("id") int id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         return "index";
     }
 
     @GetMapping("/new")
-    public String newAdmin(Model model) {
+    public String addNewAdmin(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("roles", roleService.getAllRoles());
         // Здесь roleService должен быть вашим сервисом, предоставляющим все роли
@@ -48,17 +48,19 @@ public class AdminController {
     }
 
     @GetMapping("/edit")
-    public String edit(Model model,@RequestParam("id") int id,@ModelAttribute("role") Role role) {
+    public String edit(Model model, @RequestParam("id") int id, @ModelAttribute("role") Role role) {
         model.addAttribute("user", userService.getUserById(id));
         model.addAttribute("roles", roleService.getAllRoles());
         return "edit";
     }
+
     @PostMapping("/update")
     public String update(@ModelAttribute("user") User user,
                          @RequestParam("id") int id, @ModelAttribute("role") Role role) {
         userService.updateUser(user);
         return "redirect:/";
     }
+
     @GetMapping("/delete")
     public String delete(@RequestParam("id") int id) {
         userService.deleteUser(id);
