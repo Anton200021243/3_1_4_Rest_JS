@@ -10,8 +10,7 @@ import java.util.Objects;
 @Table(name = "role")
 public class Role implements GrantedAuthority {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column
     private String name;
@@ -19,11 +18,16 @@ public class Role implements GrantedAuthority {
     public Role() {
     }
 
-    public Long getId() {
+    public Role(int id, String name) {
+        this.name = name;
+        this.id = id;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
