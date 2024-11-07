@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.Init;
+package ru.kata.spring.boot_security.demo.init;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,20 +26,17 @@ public class DbInit {
         userRepository.deleteAll();
         roleRepository.deleteAll();
 
-        // Создаем роли
         Role roleUser = new Role((long) 1, "ROLE_USER");
         Role roleAdmin = new Role((long) 2, "ROLE_ADMIN");
 
         roleRepository.save(roleUser);
         roleRepository.save(roleAdmin);
 
-        // Создаем пользователей и устанавливаем роли
         User admin = new User("admin",
                 "$2a$10$ej8m0g0/4nRLEbBH/bJlFuFcRK7E.huTjNe08OsCYczNyimCCJtV.", "admin@mail.ru");
         User user = new User("user",
                 "$2a$10$FH9R6.Egoqxht7OeeHSAh.Y6NtwIzdAk4A598xvMlyToAfIImeUZW", "user@mail.ru");
 
-        // Устанавливаем роли пользователям
         admin.setRoles(Set.of(roleAdmin));
         user.setRoles(Set.of(roleUser));
 

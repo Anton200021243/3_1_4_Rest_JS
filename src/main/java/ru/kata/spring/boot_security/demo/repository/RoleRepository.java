@@ -6,6 +6,5 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 
 @Repository
-@Transactional
 public interface RoleRepository extends JpaRepository<Role, Long> {
 }
