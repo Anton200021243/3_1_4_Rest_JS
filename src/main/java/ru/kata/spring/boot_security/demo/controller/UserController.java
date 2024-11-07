@@ -18,10 +18,11 @@ public class UserController {
         this.userService = adminService;
     }
 
-    @GetMapping("/user")
+    @GetMapping("")
     public String showUserInfo(Principal principal, Model model) {
         User user = userService.getUserByUsername(principal.getName());
-        model.addAttribute("user", user);
-        return "indexUser";
+        model.addAttribute("authUser",user);
+        model.addAttribute("users", userService.getAllUsers());
+        return "user";
     }
 }

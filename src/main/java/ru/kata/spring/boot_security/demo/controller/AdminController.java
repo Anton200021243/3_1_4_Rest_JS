@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.controller;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -8,60 +9,49 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
     private final UserService userService;
     private final RoleService roleService;
+    private final PasswordEncoder encoder;
+    private static final String REDIRECT = "redirect:/admin";
 
-    public AdminController(UserService userService, RoleService roleService) {
+    public AdminController(UserService userService, RoleService roleService, PasswordEncoder encoder) {
         this.userService = userService;
         this.roleService = roleService;
+        this.encoder = encoder;
     }
 
-    @GetMapping("")
-    public String showAllUsers(Model model) {
+    @GetMapping()
+    public String index(Model model, Principal principal) {
+        User user = userService.getUserByUsername(principal.getName());
+        model.addAttribute("authUser", user);
         model.addAttribute("users", userService.getAllUsers());
-        return "show";
-    }
-
-    @GetMapping("/user")
-    public String showUser(@RequestParam("id") int id, Model model) {
-        model.addAttribute("user", userService.getUserById(id));
-        return "index";   //admin/user?id=69
-    }
-
-    @GetMapping("/new")
-    public String addNewAdmin(Model model) {
-        model.addAttribute("user", new User());
         model.addAttribute("roles", roleService.getAllRoles());
-        // Здесь roleService должен быть вашим сервисом, предоставляющим все роли
-        return "new";
+        model.addAttribute("newUser", new User());
+        return "admin";
+
     }
 
-    @PostMapping("/new")
-    public String createNewAdmin(@ModelAttribute("user") User user, @ModelAttribute("role") Role role) {
+    @PostMapping()
+    public String createNewAdmin(@ModelAttribute("user") User user) {
+        userService.addUser(user);
+        return REDIRECT;
+    }
+
+    @PostMapping("/{id}")
+    public String update(@ModelAttribute("user") User user, @PathVariable("id") long id) {
+        user.setPassword(encoder.encode(user.getPassword()));
         userService.updateUser(user);
-        return "index";
+        return REDIRECT;
     }
 
-    @GetMapping("/edit")
-    public String edit(Model model, @RequestParam("id") int id, @ModelAttribute("role") Role role) {
-        model.addAttribute("user", userService.getUserById(id));
-        model.addAttribute("roles", roleService.getAllRoles());
-        return "edit";
-    }
-
-    @PostMapping("/update")
-    public String update(@ModelAttribute("user") User user,
-                         @RequestParam("id") int id, @ModelAttribute("role") Role role) {
-        userService.updateUser(user);
-        return "redirect:";
-    }
-
-    @GetMapping("/delete")
-    public String delete(@RequestParam("id") int id) {
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") long id) {
         userService.deleteUser(id);
-        return "redirect:";
+        return REDIRECT;
     }
 }
