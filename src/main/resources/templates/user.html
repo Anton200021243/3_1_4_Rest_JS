@@ -58,14 +58,13 @@
 
                 </thead>
 
-                <tbody th:each="user: ${users}">
-                <td th:utext="${user.getId()}"></td>
-                <td th:utext="${user.getUsername()}">Name</td>
-                <td th:utext="${user.getEmail()}">Email()</td>
-
+                <tbody th:id="authUser">
+                <td th:utext="${authUser.getId()}"></td>
+                <td th:utext="${authUser.getUsername()}">Name</td>
+                <td th:utext="${authUser.getEmail()}">Email()</td>
 
                 <td>
-                    <div th:each="role : ${user.getRoles()}">
+                    <div th:each="role : ${authUser.getRoles()}">
                         <div th:text="${role.getRoleNameWithoutPrefix()}">user</div>
                     </div>
                 </td>
