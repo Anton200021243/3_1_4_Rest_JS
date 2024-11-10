@@ -14,6 +14,7 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/roles")
 public class RestUserController {
     private final RoleService roleService;
