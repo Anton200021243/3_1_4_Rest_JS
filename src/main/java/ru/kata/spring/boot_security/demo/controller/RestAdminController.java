@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.rest_controller;
+package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,12 +12,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
-public class RestUserAndRoleController {
+public class RestAdminController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public RestUserAndRoleController(UserService userService, PasswordEncoder passwordEncoder) {
+    public RestAdminController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
