@@ -44,7 +44,7 @@ public class RestAdminController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@PathVariable("id") long id, @RequestBody User user){
+    public ResponseEntity<User> update(@RequestBody User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.updateUser(user);
         return ResponseEntity.ok(user);

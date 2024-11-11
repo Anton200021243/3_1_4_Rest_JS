@@ -41,7 +41,7 @@ public class AdminController {
     }
 
     @PostMapping("/{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") long id) {
+    public String update(@ModelAttribute("user") User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         userService.updateUser(user);
         return REDIRECT;
