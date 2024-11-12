@@ -48,7 +48,7 @@
             </div>
             <ul class="nav nav-tabs" role=tablist>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#userstable" role="tab" data-toggle="tab">Users table</a>
+                    <a class="nav-link active" href="#userstable" role="tab" data-toggle="tab" id="users-table">Users table</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#newuser" role="tab" data-toggle="tab">New user</a>
@@ -85,20 +85,20 @@
                                 </div>
                                 <div class="card-body text-center">
 
-                                    <form id="formNewUser" th:method="POST" th:action="@{/admin}" th:object="${newUser}">
+                                    <form id="formNewUser" th:object="${newUser}">
                                         <div class="mb-3">
                                             <label for="idNew" class="col-form-label">ID</label>
                                             <input type="text"
                                                    class="form-control" id="idNew" readonly/>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="usernameNew" class="col-form-label">Name</label>
+                                            <label for="usernameNew" class="col-form-label">Username</label>
                                             <input type="text" name = "username"
                                                    class="form-control" id="usernameNew"
                                                    required minlength="2" maxlength="20" th:field="*{username}"/>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="EmailNew" class="col-form-label">Surname</label>
+                                            <label for="EmailNew" class="col-form-label">Email</label>
                                             <input type="text" name = "email"
                                                    class="form-control" id="EmailNew"
                                                    required minlength="2" maxlength="20" th:field="*{email}"/>
@@ -122,7 +122,8 @@
                                             </select>
                                         </div>
                                         <div class="d-grid col-6 mx-auto">
-                                            <input type="submit" class="btn btn-success" value="Add new user"/>
+                                            <input type="submit" class="btn btn-success" value="Add new user"
+                                                   id="signup-submit"/>
                                         </div>
                                     </form>
                                 </div>

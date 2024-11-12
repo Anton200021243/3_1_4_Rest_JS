@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +14,10 @@ import java.security.Principal;
 public class AdminController {
     private final UserService userService;
     private final RoleService roleService;
-    private final PasswordEncoder encoder;
-    private static final String REDIRECT = "redirect:/admin";
 
-    public AdminController(UserService userService, RoleService roleService, PasswordEncoder encoder) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
-        this.encoder = encoder;
     }
 
     @GetMapping()
@@ -32,24 +28,5 @@ public class AdminController {
         model.addAttribute("roles", roleService.getAllRoles());
         model.addAttribute("newUser", new User());
         return "admin";
-    }
-
-    @PostMapping()
-    public String createNewAdmin(@ModelAttribute("user") User user) {
-        userService.addUser(user);
-        return REDIRECT;
-    }
-
-    @PostMapping("/{id}")
-    public String update(@ModelAttribute("user") User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        userService.updateUser(user);
-        return REDIRECT;
-    }
-
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") long id) {
-        userService.deleteUser(id);
-        return REDIRECT;
     }
 }
